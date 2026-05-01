@@ -44,4 +44,7 @@ jobs:
             find chat-app/src-tauri/target/release/bundle -type f -name "*.dmg" 2>/dev/null || echo "No .dmg files found at all"
             exit 1
           fi
-          gh release upload "${{ github.ref_name }}" "$DMG" --clobber
+          # Rename to versionless so download link stays the same across releases
+          DIR=$(dirname "$DMG")
+          cp "$DMG" "$DIR/ChatQuota.dmg"
+          gh release upload "${{ github.ref_name }}" "$DIR/ChatQuota.dmg" --clobber
