@@ -11,6 +11,7 @@ import {
   MessageOutlined,
   ArrowRightOutlined,
   StarOutlined,
+  StarFilled,
   CheckCircleFilled,
   RocketOutlined,
   ApiOutlined,
@@ -843,7 +844,7 @@ export default function LandingPage() {
                   {/* Stars */}
                   <div style={{ display: "flex", gap: 3, marginBottom: 18 }}>
                     {[...Array(5)].map((_, j) => (
-                      <StarOutlined key={j} style={{ fontSize: 14, color: "#fa8c16" }} />
+                      <StarFilled key={j} style={{ fontSize: 14, color: "#fa8c16" }} />
                     ))}
                   </div>
                   <Paragraph
