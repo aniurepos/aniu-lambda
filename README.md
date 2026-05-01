@@ -201,6 +201,17 @@ The deployed site will have:
 - `https://<user>.github.io/aniu-lambda/` → Landing page
 - `https://<user>.github.io/aniu-lambda/chat` → Chat app
 
+### Release a new version
+
+1. Update version in `chat-app/config.json`
+2. Commit and tag:
+   ```bash
+   git add chat-app/config.json
+   git commit -m "chore: bump to v0.0.4"
+   git tag v0.0.4 && git push origin v0.0.4
+   ```
+3. GitHub Actions auto-creates a Release with DMG and updates the landing page
+
 ### Install Desktop App (macOS)
 
 Download `ChatQuota.dmg` from [Releases](https://github.com/aniurepos/aniu-lambda/releases).  
