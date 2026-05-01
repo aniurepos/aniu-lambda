@@ -1,0 +1,31 @@
+plugins {
+    id 'java'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // JUnit 5
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.0'
+
+    // HTTP client (Java 11+ built-in HttpClient)
+    // JSON parsing
+    testImplementation 'com.google.code.gson:gson:2.10.1'
+}
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
+        showStandardStreams = true
+    }
+
+    // Pass environment variables to tests
+    systemProperty "api.url", System.getProperty("api.url", "")
+    systemProperty "api.key", System.getProperty("api.key", "")
+}
+
+sourceCompatibility = 17
+targetCompatibility = 17

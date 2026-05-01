@@ -1,0 +1,38 @@
+# Dependencies
+chat-app/node_modules/
+chat-app/.next/
+
+# Build output
+chat-app/out/
+docs/
+chat-app/
+.github/
+
+# Gradle build artifacts
+sam-app/.gradle/
+sam-app/*/.gradle/
+sam-app/*/build/
+sam-app-integ/.gradle/
+sam-app-integ/build/
+
+# Tauri
+chat-app/src-tauri/target/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Env
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+npm-debug.log*

@@ -15,26 +15,47 @@ import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent
 
 /**
  * Handler for requests to Lambda function.
+ * Auth is handled by API Gateway (API Key + Usage Plan).
  */
 public class App implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
 
     public APIGatewayProxyResponseEvent handleRequest(final APIGatewayProxyRequestEvent input, final Context context) {
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/json");
-        headers.put("X-Custom-Header", "application/json");
+        headers.put("Access-Control-Allow-Origin", "*");
+        headers.put("Access-Control-Allow-Headers", "Content-Type,x-api-key");
+        headers.put("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
+
+        // Handle preflight OPTIONS request
+        if (input.getHttpMethod() != null && input.getHttpMethod().equalsIgnoreCase("OPTIONS")) {
+            return new APIGatewayProxyResponseEvent()
+                    .withHeaders(headers)
+                    .withStatusCode(200);
+        }
 
         APIGatewayProxyResponseEvent response = new APIGatewayProxyResponseEvent()
                 .withHeaders(headers);
+
+        // GET request = auth check / health check
+        if ("GET".equalsIgnoreCase(input.getHttpMethod())) {
+            return response
+                    .withStatusCode(200)
+                    .withBody("{\"status\": \"ok\"}");
+        }
+
+        // POST request = chat message
         try {
-            final String pageContents = this.getPageContents("https://checkip.amazonaws.com");
-            String output = String.format("{ \"message\": \"hello world\", \"location\": \"%s\" }", pageContents);
+            String body = input.getBody();
+            // Escape the body to make it valid JSON
+            String escapedBody = body != null ? body.replace("\\", "\\\\").replace("\"", "\\\"") : "empty";
+            String output = String.format("{ \"message\": \"You said: %s\" }", escapedBody);
 
             return response
                     .withStatusCode(200)
                     .withBody(output);
-        } catch (IOException e) {
+        } catch (Exception e) {
             return response
-                    .withBody("{}")
+                    .withBody("{\"message\": \"Internal server error\"}")
                     .withStatusCode(500);
         }
     }
