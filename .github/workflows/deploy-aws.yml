@@ -18,7 +18,7 @@ jobs:
   # Job 1: Build SAM Java Lambda + Run Unit Tests
   # ===========================================================================
   build-and-test:
-    name: Lambda unit test
+    name: Build & Test SAM Lambda
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -36,26 +36,18 @@ jobs:
           chmod +x gradlew
           ./gradlew build
 
-      - name: Setup SAM CLI
-        uses: aws-actions/setup-sam@v2
-
-      - name: Run sam build
-        run: |
-          cd sam-app
-          sam build
-
-      - name: Upload SAM build artifact
+      - name: Upload Lambda build artifact
         uses: actions/upload-artifact@v4
         with:
-          name: sam-build
-          path: sam-app/.aws-sam/
+          name: lambda-build
+          path: sam-app/HelloWorldFunction/build/
           retention-days: 1
 
   # ===========================================================================
   # Job 2: Deploy to Beta (depends on build)
   # ===========================================================================
   deploy-beta:
-    name: Beta infra deployment
+    name: Deploy InfraStack-Beta
     needs: build-and-test
     runs-on: ubuntu-latest
     environment:
@@ -72,11 +64,18 @@ jobs:
           cache: npm
           cache-dependency-path: cdk/package-lock.json
 
-      - name: Download SAM build artifact
+      - name: Download Lambda build artifact
         uses: actions/download-artifact@v4
         with:
-          name: sam-build
-          path: sam-app/.aws-sam/
+          name: lambda-build
+          path: sam-app/HelloWorldFunction/build/
+
+      - name: Setup SAM build output (for CDK asset reference)
+        run: |
+          mkdir -p sam-app/.aws-sam/build/HelloWorldFunction
+          # Copy the built JAR and any dependencies to the expected SAM build path
+          cp -r sam-app/HelloWorldFunction/build/libs/* sam-app/.aws-sam/build/HelloWorldFunction/
+          cp -r sam-app/HelloWorldFunction/build/resources/* sam-app/.aws-sam/build/HelloWorldFunction/ 2>/dev/null || true
 
       - name: Install CDK dependencies
         run: npm ci
@@ -108,7 +107,7 @@ jobs:
   # Job 3: Integration Tests against Beta (depends on deploy-beta)
   # ===========================================================================
   integration-test:
-    name: Beta integ test
+    name: Integration Tests (Beta)
     needs: deploy-beta
     runs-on: ubuntu-latest
     steps:
@@ -140,24 +139,11 @@ jobs:
           ./gradlew test -Dapi.url="$API_URL" -Dapi.key="$API_KEY"
 
   # ===========================================================================
-  # Job 4: Manual approval before Prod deployment
-  # ===========================================================================
-  approve-prod:
-    name: Manual approval for Prod
-    needs: integration-test
-    runs-on: ubuntu-latest
-    environment:
-      name: prod
-    steps:
-      - name: Awaiting manual approval
-        run: echo "Approved! Proceeding to Prod deployment..."
-
-  # ===========================================================================
-  # Job 5: Deploy to Prod (depends on manual approval)
+  # Job 4: Deploy to Prod (depends on integration tests passing)
   # ===========================================================================
   deploy-prod:
-    name: Prod infra deployment
-    needs: approve-prod
+    name: Deploy InfraStack-Prod
+    needs: integration-test
     runs-on: ubuntu-latest
     environment:
       name: prod
@@ -173,11 +159,17 @@ jobs:
           cache: npm
           cache-dependency-path: cdk/package-lock.json
 
-      - name: Download SAM build artifact
+      - name: Download Lambda build artifact
         uses: actions/download-artifact@v4
         with:
-          name: sam-build
-          path: sam-app/.aws-sam/
+          name: lambda-build
+          path: sam-app/HelloWorldFunction/build/
+
+      - name: Setup SAM build output (for CDK asset reference)
+        run: |
+          mkdir -p sam-app/.aws-sam/build/HelloWorldFunction
+          cp -r sam-app/HelloWorldFunction/build/libs/* sam-app/.aws-sam/build/HelloWorldFunction/
+          cp -r sam-app/HelloWorldFunction/build/resources/* sam-app/.aws-sam/build/HelloWorldFunction/ 2>/dev/null || true
 
       - name: Install CDK dependencies
         run: npm ci
