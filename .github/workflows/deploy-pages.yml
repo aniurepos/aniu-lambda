@@ -38,7 +38,6 @@ jobs:
       - name: Build static export
         run: npm run build
         env:
-          NEXT_PUBLIC_BASE_PATH: ""
           NEXT_PUBLIC_APP_VERSION: ${{ github.ref_name }}
 
       - name: Copy to docs/

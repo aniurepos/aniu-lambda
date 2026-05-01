@@ -5,9 +5,10 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
   },
-  // For GitHub Pages deployment under a subpath
-  basePath: process.env.NEXT_PUBLIC_BASE_PATH || "",
-  assetPrefix: process.env.NEXT_PUBLIC_BASE_PATH || "",
+  // Use relative paths so it works on both custom domain and GitHub Pages subpath
+  basePath: "",
+  assetPrefix: "./",
 };
+
 
 export default nextConfig;
