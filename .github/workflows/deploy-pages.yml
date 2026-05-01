@@ -44,6 +44,7 @@ jobs:
         run: |
           rm -rf ../docs
           cp -r out ../docs
+          touch ../docs/.nojekyll
 
       - name: Commit and push docs/
         run: |
