@@ -8,7 +8,11 @@ export const metadata: Metadata = {
   description:
     "ChatQuota lets you ask about your AWS account usage and service quotas in plain English. Built with Next.js, Ant Design, and Tauri.",
   icons: {
-    icon: "/favicon.svg",
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/icon.png", type: "image/png" },
+    ],
+    apple: "/icon.png",
   },
 };
 
