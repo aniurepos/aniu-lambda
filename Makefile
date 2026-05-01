@@ -91,7 +91,9 @@ chat-build: ## Build Next.js static export
 chat-build-docs: chat-build ## Build Next.js static export and copy to docs/ (for GitHub Pages)
 	rm -rf docs
 	cp -r chat-app/out docs
-	@echo "✅ docs/ folder updated. Commit and push to deploy to GitHub Pages."
+	touch docs/.nojekyll
+	echo "chatquota.com" > docs/CNAME
+	@echo "✅ docs/ folder updated with CNAME for chatquota.com. Commit and push to deploy to GitHub Pages."
 
 chat-tauri-dev: ## Start Tauri dev mode (Next.js + Tauri window)
 	cd chat-app && npm run tauri dev

@@ -5,10 +5,9 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
   },
-  // Build with empty basePath. After build, sed replaces /_next/ with ./_next/
-  // so it works on both custom domain (/) and GitHub Pages subpath (/aniu-lambda)
+  // Custom domain (chatquota.com) — use absolute paths so /chat/ page resolves _next correctly
   basePath: "",
-  assetPrefix: "",
+  assetPrefix: "/",
 };
 
 
