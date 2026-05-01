@@ -1,0 +1,51 @@
+{
+  "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
+  "productName": "ChatQuota",
+  "version": "0.1.0",
+  "identifier": "com.chatquota.app",
+  "build": {
+    "frontendDist": "../out",
+    "devUrl": "http://localhost:3000/chat",
+    "beforeDevCommand": "npm run dev",
+    "beforeBuildCommand": "npm run build"
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "ChatQuota",
+        "width": 800,
+        "height": 600,
+        "minWidth": 400,
+        "minHeight": 400,
+        "resizable": true,
+        "fullscreen": false,
+        "url": "/chat"
+      }
+    ],
+    "security": {
+      "csp": null
+    }
+  },
+  "plugins": {
+    "updater": {
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEI0Q0FDRDgxMkNDMTMyMDkKUldRSk1zRXNnYzNLdE9SWGV4M3lWUGR5elRCODlFTG5HS2FiaUVCdjlOWWpMa3dEV0RlR2ZyKzAK",
+      "endpoints": [
+        "https://github.com/aniurepos/aniu-lambda/releases/latest/download/update.json"
+      ],
+      "windows": {
+        "installMode": "passive"
+      }
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ]
+  }
+}
