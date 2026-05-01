@@ -9,10 +9,10 @@ export const metadata: Metadata = {
     "ChatQuota lets you ask about your AWS account usage and service quotas in plain English. Built with Next.js, Ant Design, and Tauri.",
   icons: {
     icon: [
-      { url: "/favicon.svg", type: "image/svg+xml" },
-      { url: "/icon.png", type: "image/png" },
+      { url: "./favicon.svg", type: "image/svg+xml" },
+      { url: "./icon.png", type: "image/png" },
     ],
-    apple: "/icon.png",
+    apple: "./icon.png",
   },
 };
 
