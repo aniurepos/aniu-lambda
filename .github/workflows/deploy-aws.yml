@@ -18,7 +18,7 @@ jobs:
   # Job 1: Build SAM Java Lambda + Run Unit Tests
   # ===========================================================================
   build-and-test:
-    name: Build & Test SAM Lambda
+    name: Lambda unit test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -47,7 +47,7 @@ jobs:
   # Job 2: Deploy to Beta (depends on build)
   # ===========================================================================
   deploy-beta:
-    name: Deploy InfraStack-Beta
+    name: Beta infra deployment
     needs: build-and-test
     runs-on: ubuntu-latest
     environment:
@@ -107,7 +107,7 @@ jobs:
   # Job 3: Integration Tests against Beta (depends on deploy-beta)
   # ===========================================================================
   integration-test:
-    name: Integration Tests (Beta)
+    name: Beta integ test
     needs: deploy-beta
     runs-on: ubuntu-latest
     steps:
@@ -139,11 +139,24 @@ jobs:
           ./gradlew test -Dapi.url="$API_URL" -Dapi.key="$API_KEY"
 
   # ===========================================================================
-  # Job 4: Deploy to Prod (depends on integration tests passing)
+  # Job 4: Manual approval before Prod deployment
+  # ===========================================================================
+  approve-prod:
+    name: Manual approval for Prod
+    needs: integration-test
+    runs-on: ubuntu-latest
+    environment:
+      name: prod
+    steps:
+      - name: Awaiting manual approval
+        run: echo "Approved! Proceeding to Prod deployment..."
+
+  # ===========================================================================
+  # Job 5: Deploy to Prod (depends on manual approval)
   # ===========================================================================
   deploy-prod:
-    name: Deploy InfraStack-Prod
-    needs: integration-test
+    name: Prod infra deployment
+    needs: approve-prod
     runs-on: ubuntu-latest
     environment:
       name: prod
