@@ -98,8 +98,9 @@ chat-tauri-dev: ## Start Tauri dev mode (Next.js + Tauri window)
 
 chat-tauri-build: ## Build Tauri desktop app (DMG for macOS) and copy to versionless path
 	cd chat-app && npm run tauri build
-	cp chat-app/src-tauri/target/release/bundle/dmg/*.dmg chat-app/src-tauri/target/release/bundle/dmg/ChatQuota.dmg
-	@echo "✅ DMG ready at chat-app/src-tauri/target/release/bundle/dmg/ChatQuota.dmg"
+	mkdir -p chat-app/dist
+	cp chat-app/src-tauri/target/release/bundle/dmg/*.dmg chat-app/dist/ChatQuota.dmg
+	@echo "✅ DMG ready at chat-app/dist/ChatQuota.dmg"
 	@echo "   Commit and push a tag to upload to release."
 
 # =============================================================================
