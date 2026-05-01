@@ -1,0 +1,73 @@
+name: Build and Release Tauri App
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-release:
+    runs-on: macos-latest
+    defaults:
+      run:
+        working-directory: chat-app
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: chat-app/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
+
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Install Tauri CLI
+        run: cargo install tauri-cli --version "^2.0"
+
+      - name: Build Tauri app
+        run: cargo tauri build
+        env:
+          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
+
+      - name: Generate update signature
+        id: signature
+        run: |
+          DMG=$(ls target/release/bundle/dmg/*.dmg | head -1)
+          echo "dmg_path=$DMG" >> $GITHUB_OUTPUT
+          echo "dmg_name=$(basename "$DMG")" >> $GITHUB_OUTPUT
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: ChatQuota ${{ github.ref_name }}
+          body: |
+            ## ChatQuota ${{ github.ref_name }}
+
+            Download the DMG for macOS Apple Silicon below.
+
+            ### How to set up auto-update
+
+            1. Generate a signing key:
+               ```
+               cargo tauri signer generate -w ~/.tauri/aniu-lambda.key
+               ```
+            2. Add the private key to GitHub Secrets:
+               - `TAURI_SIGNING_PRIVATE_KEY` — contents of the key file
+               - `TAURI_SIGNING_PRIVATE_KEY_PASSWORD` — your password
+            3. Add the public key to `tauri.conf.json` → `plugins.updater.pubkey`
+            4. Push a tag like `v0.1.0` to trigger this workflow
+          files: |
+            ${{ steps.signature.outputs.dmg_path }}
