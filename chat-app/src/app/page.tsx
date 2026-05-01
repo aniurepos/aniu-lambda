@@ -437,8 +437,57 @@ export default function LandingPage() {
 
           <div style={{ marginTop: 8 }}>
             <Text type="secondary" style={{ fontSize: 13 }}>
-              Free 5 MB App · Build for Apple Silicon
+              Free 5 MB App · Built for Apple Silicon
             </Text>
+          </div>
+
+          {/* CI/CD badges */}
+          <div style={{ marginTop: 28, display: "flex", justifyContent: "center", gap: 12, flexWrap: "wrap" }}>
+            <a
+              href="https://github.com/aniurepos/aniu-lambda/actions"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 6,
+                padding: "5px 14px",
+                borderRadius: 100,
+                background: "#f6f8fa",
+                border: "1px solid #e1e4e8",
+                fontSize: 12,
+                color: "#555",
+                textDecoration: "none",
+              }}
+            >
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                <circle cx="8" cy="8" r="3" fill="#2da44e"/>
+              </svg>
+              CI/CD pipeline
+            </a>
+            <a
+              href="https://github.com/aniurepos/aniu-lambda/releases"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 6,
+                padding: "5px 14px",
+                borderRadius: 100,
+                background: "#f6f8fa",
+                border: "1px solid #e1e4e8",
+                fontSize: 12,
+                color: "#555",
+                textDecoration: "none",
+              }}
+            >
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                <path d="M1 7.775V2.5C1 1.672 1.672 1 2.5 1h5.275c.398 0 .78.158 1.061.44l5.725 5.724a1.5 1.5 0 0 1 0 2.121l-5.276 5.276a1.5 1.5 0 0 1-2.121 0L1.44 8.836A1.5 1.5 0 0 1 1 7.775Z" stroke="#555" stroke-width="1.2" fill="none"/>
+                <circle cx="4" cy="4" r="1" fill="#555"/>
+              </svg>
+              v0.0.2
+            </a>
           </div>
           </div>
       </section>
