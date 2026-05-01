@@ -46,6 +46,7 @@ jobs:
           rm -rf ../docs
           cp -r out ../docs
           touch ../docs/.nojekyll
+          echo "www.chatquota.com" > ../docs/CNAME
 
       - name: Commit and push docs/
         run: |
