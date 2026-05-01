@@ -24,6 +24,7 @@ import {
 } from "@ant-design/icons";
 import Link from "next/link";
 import TriangleIcon from "./components/TriangleIcon";
+import config from "../../config.json";
 
 const { Title, Text, Paragraph } = Typography;
 
@@ -486,7 +487,7 @@ export default function LandingPage() {
                 <path d="M1 7.775V2.5C1 1.672 1.672 1 2.5 1h5.275c.398 0 .78.158 1.061.44l5.725 5.724a1.5 1.5 0 0 1 0 2.121l-5.276 5.276a1.5 1.5 0 0 1-2.121 0L1.44 8.836A1.5 1.5 0 0 1 1 7.775Z" stroke="#555" strokeWidth="1.2" fill="none"/>
                 <circle cx="4" cy="4" r="1" fill="#555"/>
               </svg>
-              {process.env.NEXT_PUBLIC_APP_VERSION || "v0.0.2"}
+              {config.version}
             </a>
           </div>
           </div>
