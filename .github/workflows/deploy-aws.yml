@@ -36,11 +36,19 @@ jobs:
           chmod +x gradlew
           ./gradlew build
 
-      - name: Upload Lambda build artifact
+      - name: Setup SAM CLI
+        uses: aws-actions/setup-sam@v2
+
+      - name: Run sam build
+        run: |
+          cd sam-app
+          sam build
+
+      - name: Upload SAM build artifact
         uses: actions/upload-artifact@v4
         with:
-          name: lambda-build
-          path: sam-app/HelloWorldFunction/build/
+          name: sam-build
+          path: sam-app/.aws-sam/
           retention-days: 1
 
   # ===========================================================================
@@ -64,28 +72,11 @@ jobs:
           cache: npm
           cache-dependency-path: cdk/package-lock.json
 
-      - name: Download Lambda build artifact
+      - name: Download SAM build artifact
         uses: actions/download-artifact@v4
         with:
-          name: lambda-build
-          path: sam-app/HelloWorldFunction/build/
-
-      - name: Setup SAM build output (for CDK asset reference)
-        run: |
-          mkdir -p sam-app/.aws-sam/build/HelloWorldFunction/lib
-          # Extract the JAR (ZIP format) to get class files at the root
-          cd sam-app/.aws-sam/build/HelloWorldFunction
-          unzip -o ../../HelloWorldFunction/build/libs/HelloWorldFunction.jar
-          # Copy the JAR itself into lib/ for classpath
-          cp ../../HelloWorldFunction/build/libs/HelloWorldFunction.jar lib/
-          # Download Lambda runtime dependencies into lib/
-          cd lib
-          curl -sL -o aws-lambda-java-core-1.2.2.jar \
-            "https://repo1.maven.org/maven2/com/amazonaws/aws-lambda-java-core/1.2.2/aws-lambda-java-core-1.2.2.jar"
-          curl -sL -o aws-lambda-java-events-3.11.0.jar \
-            "https://repo1.maven.org/maven2/com/amazonaws/aws-lambda-java-events/3.11.0/aws-lambda-java-events-3.11.0.jar"
-          curl -sL -o joda-time-2.6.jar \
-            "https://repo1.maven.org/maven2/joda-time/joda-time/2.6/joda-time-2.6.jar"
+          name: sam-build
+          path: sam-app/.aws-sam/
 
       - name: Install CDK dependencies
         run: npm ci
@@ -182,28 +173,11 @@ jobs:
           cache: npm
           cache-dependency-path: cdk/package-lock.json
 
-      - name: Download Lambda build artifact
+      - name: Download SAM build artifact
         uses: actions/download-artifact@v4
         with:
-          name: lambda-build
-          path: sam-app/HelloWorldFunction/build/
-
-      - name: Setup SAM build output (for CDK asset reference)
-        run: |
-          mkdir -p sam-app/.aws-sam/build/HelloWorldFunction/lib
-          # Extract the JAR (ZIP format) to get class files at the root
-          cd sam-app/.aws-sam/build/HelloWorldFunction
-          unzip -o ../../HelloWorldFunction/build/libs/HelloWorldFunction.jar
-          # Copy the JAR itself into lib/ for classpath
-          cp ../../HelloWorldFunction/build/libs/HelloWorldFunction.jar lib/
-          # Download Lambda runtime dependencies into lib/
-          cd lib
-          curl -sL -o aws-lambda-java-core-1.2.2.jar \
-            "https://repo1.maven.org/maven2/com/amazonaws/aws-lambda-java-core/1.2.2/aws-lambda-java-core-1.2.2.jar"
-          curl -sL -o aws-lambda-java-events-3.11.0.jar \
-            "https://repo1.maven.org/maven2/com/amazonaws/aws-lambda-java-events/3.11.0/aws-lambda-java-events-3.11.0.jar"
-          curl -sL -o joda-time-2.6.jar \
-            "https://repo1.maven.org/maven2/joda-time/joda-time/2.6/joda-time-2.6.jar"
+          name: sam-build
+          path: sam-app/.aws-sam/
 
       - name: Install CDK dependencies
         run: npm ci
