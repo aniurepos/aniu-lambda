@@ -123,8 +123,8 @@ Triggers on changes to `chat-app/` or the workflow file itself.
 
 | Stack | Purpose | API URL | API Key |
 |-------|---------|---------|---------|
-| `InfraStack-Beta` | Test environment — deployed first, verified by integ tests | `https://o14eeln3b5.execute-api.us-west-2.amazonaws.com/prod/` | Get from AWS Console |
-| `InfraStack-Prod` | Production environment — deployed only after tests pass | `https://gwy6regb3k.execute-api.us-west-2.amazonaws.com/prod/` | Get from AWS Console |
+| `InfraStack-Beta` | Test environment — deployed first, verified by integ tests | Get from CDK output `ApiUrl` | Get from CDK output `ApiKeyId` |
+| `InfraStack-Prod` | Production environment — deployed only after tests pass | Get from CDK output `ApiUrl` | Get from CDK output `ApiKeyId` |
 
 ### Required GitHub Secrets
 
