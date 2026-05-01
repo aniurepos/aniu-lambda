@@ -37,6 +37,11 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release upload "${{ github.ref_name }}" \
-            chat-app/src-tauri/target/release/bundle/macos/*.dmg \
-            --clobber
+          # Find the DMG file (Tauri puts it in the dmg/ subdirectory)
+          DMG=$(ls chat-app/src-tauri/target/release/bundle/dmg/*.dmg 2>/dev/null || ls chat-app/src-tauri/target/release/bundle/macos/*.dmg 2>/dev/null)
+          if [ -z "$DMG" ]; then
+            echo "No DMG found in bundle/"
+            find chat-app/src-tauri/target/release/bundle -type f -name "*.dmg" 2>/dev/null || echo "No .dmg files found at all"
+            exit 1
+          fi
+          gh release upload "${{ github.ref_name }}" "$DMG" --clobber
