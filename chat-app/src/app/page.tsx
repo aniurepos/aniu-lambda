@@ -279,7 +279,7 @@ export default function LandingPage() {
             <a href="#faq" style={{ fontSize: 14, color: "#666", textDecoration: "none", fontWeight: 500 }}>
               FAQ
             </a>
-            <a href="https://github.com" target="_blank" rel="noopener noreferrer">
+            <a href="https://github.com/aniurepos/aniu-lambda" target="_blank" rel="noopener noreferrer">
               <GithubOutlined style={{ fontSize: 18, color: "#666" }} />
             </a>
           </Space>
@@ -1049,7 +1049,7 @@ export default function LandingPage() {
               Ask your AWS account anything — in plain English. Open source, free forever.
             </Paragraph>
             <a
-              href="https://github.com"
+              href="https://github.com/aniurepos/aniu-lambda"
               target="_blank"
               rel="noopener noreferrer"
               style={{ color: "rgba(255,255,255,0.5)", fontSize: 18 }}
