@@ -244,6 +244,11 @@ export default function LandingPage() {
 
   return (
     <div style={{ minHeight: "100vh", background: "#fff", overflowX: "hidden" }}>
+      <style>{`
+        @media (max-width: 640px) {
+          .nav-links { display: none !important; }
+        }
+      `}</style>
       {/* ── Sticky Nav ── */}
       <nav
         style={{
@@ -270,7 +275,7 @@ export default function LandingPage() {
               ChatQuota
             </Text>
           </Link>
-          <Space size={20} wrap style={{ gap: 12 }}>
+          <Space size={20} wrap style={{ gap: 12 }} className="nav-links">
             <a href="#features" style={{ fontSize: 14, color: "#666", textDecoration: "none", fontWeight: 500, display: "inline-block" }}>
               Features
             </a>
@@ -284,21 +289,9 @@ export default function LandingPage() {
               <GithubOutlined style={{ fontSize: 18, color: "#666" }} />
             </a>
           </Space>
-          <Space size="middle">
+          <Space size="small">
             <Link href="/chat">
-              <Button type="link" style={{ fontWeight: 500 }}>Sign in</Button>
-            </Link>
-            <Link href="/chat">
-              <Button
-                type="primary"
-                icon={<RightOutlined />}
-                style={{
-                  height: 40,
-                  paddingInline: 20,
-                  borderRadius: 8,
-                  fontWeight: 600,
-                }}
-              >
+              <Button type="primary" icon={<RightOutlined />} style={{ height: 36, paddingInline: 16, borderRadius: 8, fontWeight: 600, fontSize: 13 }}>
                 Get Started
               </Button>
             </Link>
