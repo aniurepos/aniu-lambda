@@ -270,14 +270,14 @@ export default function LandingPage() {
               ChatQuota
             </Text>
           </Link>
-          <Space size={20}>
-            <a href="#features" style={{ fontSize: 14, color: "#666", textDecoration: "none", fontWeight: 500 }}>
+          <Space size={20} wrap style={{ gap: 12 }}>
+            <a href="#features" style={{ fontSize: 14, color: "#666", textDecoration: "none", fontWeight: 500, display: "inline-block" }}>
               Features
             </a>
-            <a href="#how-it-works" style={{ fontSize: 14, color: "#666", textDecoration: "none", fontWeight: 500 }}>
+            <a href="#how-it-works" style={{ fontSize: 14, color: "#666", textDecoration: "none", fontWeight: 500, display: "inline-block" }}>
               How it works
             </a>
-            <a href="#faq" style={{ fontSize: 14, color: "#666", textDecoration: "none", fontWeight: 500 }}>
+            <a href="#faq" style={{ fontSize: 14, color: "#666", textDecoration: "none", fontWeight: 500, display: "inline-block" }}>
               FAQ
             </a>
             <a href="https://github.com/aniurepos/aniu-lambda" target="_blank" rel="noopener noreferrer">
@@ -309,7 +309,7 @@ export default function LandingPage() {
       {/* ── Hero ── */}
       <section
         style={{
-          padding: "140px 24px 10px",
+          padding: "120px 16px 10px",
           background: "linear-gradient(170deg, #f0f5ff 0%, #faf5ff 30%, #fff 100%)",
           position: "relative",
           overflow: "hidden",
@@ -365,7 +365,7 @@ export default function LandingPage() {
           <Title
             level={1}
             style={{
-              fontSize: 60,
+              fontSize: "clamp(32px, 8vw, 60px)",
               fontFamily: "Inter, -apple-system, BlinkMacSystemFont, sans-serif",
               fontWeight: 800,
               letterSpacing: "-0.03em",
@@ -517,13 +517,13 @@ export default function LandingPage() {
       </section>
 
       {/* ── Stats ── */}
-      <section ref={statsRef.ref} style={{ padding: "60px 24px", background: "#fff" }}>
+      <section ref={statsRef.ref} style={{ padding: "60px 16px", background: "#fff" }}>
         <div
           style={{
             maxWidth: 900,
             margin: "0 auto",
             display: "grid",
-            gridTemplateColumns: "repeat(4, 1fr)",
+            gridTemplateColumns: "repeat(2, 1fr)",
             gap: 24,
           }}
         >
@@ -654,7 +654,7 @@ export default function LandingPage() {
       </section>
 
       {/* ── Features ── */}
-      <section id="features" style={{ padding: "100px 24px", background: "#fafbfc" }}>
+      <section id="features" style={{ padding: "clamp(60px, 10vw, 100px) 16px", background: "#fafbfc" }}>
         <div style={{ maxWidth: 1120, margin: "0 auto" }}>
           <div style={{ textAlign: "center", marginBottom: 64 }}>
             <Tag
@@ -730,7 +730,7 @@ export default function LandingPage() {
       </section>
 
       {/* ── How it works ── */}
-      <section id="how-it-works" style={{ padding: "100px 24px" }}>
+      <section id="how-it-works" style={{ padding: "clamp(60px, 10vw, 100px) 16px" }}>
         <div style={{ maxWidth: 860, margin: "0 auto" }}>
           <div style={{ textAlign: "center", marginBottom: 64 }}>
             <Tag
@@ -1051,14 +1051,14 @@ export default function LandingPage() {
       </section>
 
       {/* ── Footer ── */}
-      <footer style={{ padding: "48px 24px", background: "#111", color: "rgba(255,255,255,0.55)" }}>
+      <footer style={{ padding: "48px 16px", background: "#111", color: "rgba(255,255,255,0.55)" }}>
         <div
           style={{
             maxWidth: 1120,
             margin: "0 auto",
             display: "grid",
-            gridTemplateColumns: "2fr 1fr 1fr 1fr",
-            gap: 40,
+            gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))",
+            gap: 32,
           }}
         >
           {/* Brand */}
