@@ -20,12 +20,14 @@ PATH := $(JAVA_HOME)/bin:$(PATH)
 AWS_CREDS := $(shell python3 -c "import boto3; c=boto3.Session().get_credentials().get_frozen_credentials(); print(f'AWS_ACCESS_KEY_ID={c.access_key} AWS_SECRET_ACCESS_KEY={c.secret_key} AWS_SESSION_TOKEN={c.token} AWS_DEFAULT_REGION=us-west-2')")
 
 # ---- API Gateway outputs (set after deploy) ----
+# Get these from AWS Console > API Gateway > API Keys
+# Or from CDK stack outputs: cdk deploy --outputs-file response.json
 # Beta (default for testing)
 API_URL ?= https://o14eeln3b5.execute-api.us-west-2.amazonaws.com/prod/
-API_KEY ?= 3C2YnZph0l9aNo3Bb8xbo4MHuYaAyaUULoMsMoFb
+API_KEY ?= <your-api-key>
 # Prod (override with: make test-integ API_URL=... API_KEY=...)
 PROD_API_URL ?= https://gwy6regb3k.execute-api.us-west-2.amazonaws.com/prod/
-PROD_API_KEY ?= iqujbxXTvfatuAFzeC5Dy7tZpRaKTGNL1uraipEm
+PROD_API_KEY ?= <your-prod-api-key>
 
 # =============================================================================
 # SAM Java Lambda
