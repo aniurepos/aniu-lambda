@@ -72,10 +72,20 @@ jobs:
 
       - name: Setup SAM build output (for CDK asset reference)
         run: |
-          mkdir -p sam-app/.aws-sam/build/HelloWorldFunction
-          # Copy the built JAR and any dependencies to the expected SAM build path
-          cp -r sam-app/HelloWorldFunction/build/libs/* sam-app/.aws-sam/build/HelloWorldFunction/
-          cp -r sam-app/HelloWorldFunction/build/resources/* sam-app/.aws-sam/build/HelloWorldFunction/ 2>/dev/null || true
+          mkdir -p sam-app/.aws-sam/build/HelloWorldFunction/lib
+          # Extract the JAR (ZIP format) to get class files at the root
+          cd sam-app/.aws-sam/build/HelloWorldFunction
+          unzip -o ../../HelloWorldFunction/build/libs/HelloWorldFunction.jar
+          # Copy the JAR itself into lib/ for classpath
+          cp ../../HelloWorldFunction/build/libs/HelloWorldFunction.jar lib/
+          # Download Lambda runtime dependencies into lib/
+          cd lib
+          curl -sL -o aws-lambda-java-core-1.2.2.jar \
+            "https://repo1.maven.org/maven2/com/amazonaws/aws-lambda-java-core/1.2.2/aws-lambda-java-core-1.2.2.jar"
+          curl -sL -o aws-lambda-java-events-3.11.0.jar \
+            "https://repo1.maven.org/maven2/com/amazonaws/aws-lambda-java-events/3.11.0/aws-lambda-java-events-3.11.0.jar"
+          curl -sL -o joda-time-2.6.jar \
+            "https://repo1.maven.org/maven2/joda-time/joda-time/2.6/joda-time-2.6.jar"
 
       - name: Install CDK dependencies
         run: npm ci
@@ -180,9 +190,20 @@ jobs:
 
       - name: Setup SAM build output (for CDK asset reference)
         run: |
-          mkdir -p sam-app/.aws-sam/build/HelloWorldFunction
-          cp -r sam-app/HelloWorldFunction/build/libs/* sam-app/.aws-sam/build/HelloWorldFunction/
-          cp -r sam-app/HelloWorldFunction/build/resources/* sam-app/.aws-sam/build/HelloWorldFunction/ 2>/dev/null || true
+          mkdir -p sam-app/.aws-sam/build/HelloWorldFunction/lib
+          # Extract the JAR (ZIP format) to get class files at the root
+          cd sam-app/.aws-sam/build/HelloWorldFunction
+          unzip -o ../../HelloWorldFunction/build/libs/HelloWorldFunction.jar
+          # Copy the JAR itself into lib/ for classpath
+          cp ../../HelloWorldFunction/build/libs/HelloWorldFunction.jar lib/
+          # Download Lambda runtime dependencies into lib/
+          cd lib
+          curl -sL -o aws-lambda-java-core-1.2.2.jar \
+            "https://repo1.maven.org/maven2/com/amazonaws/aws-lambda-java-core/1.2.2/aws-lambda-java-core-1.2.2.jar"
+          curl -sL -o aws-lambda-java-events-3.11.0.jar \
+            "https://repo1.maven.org/maven2/com/amazonaws/aws-lambda-java-events/3.11.0/aws-lambda-java-events-3.11.0.jar"
+          curl -sL -o joda-time-2.6.jar \
+            "https://repo1.maven.org/maven2/joda-time/joda-time/2.6/joda-time-2.6.jar"
 
       - name: Install CDK dependencies
         run: npm ci
