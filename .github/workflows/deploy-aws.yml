@@ -52,7 +52,6 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: beta
-      url: ${{ steps.get-beta-url.outputs.api_url }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -95,13 +94,6 @@ jobs:
       - name: Deploy InfraStack-Beta
         run: npx cdk deploy InfraStack-Beta --require-approval never
         working-directory: cdk
-
-      - name: Get Beta API URL
-        id: get-beta-url
-        run: |
-          URL=$(aws cloudformation describe-stacks --stack-name InfraStack-Beta \
-            --query "Stacks[0].Outputs[?OutputKey=='ApiUrl'].OutputValue" --output text)
-          echo "api_url=$URL" >> "$GITHUB_OUTPUT"
 
   # ===========================================================================
   # Job 3: Integration Tests against Beta (depends on deploy-beta)
@@ -147,7 +139,6 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: prod
-      url: ${{ steps.get-prod-url.outputs.api_url }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -190,9 +181,3 @@ jobs:
         run: npx cdk deploy InfraStack-Prod --require-approval never
         working-directory: cdk
 
-      - name: Get Prod API URL
-        id: get-prod-url
-        run: |
-          URL=$(aws cloudformation describe-stacks --stack-name InfraStack-Prod \
-            --query "Stacks[0].Outputs[?OutputKey=='ApiUrl'].OutputValue" --output text)
-          echo "api_url=$URL" >> "$GITHUB_OUTPUT"
