@@ -4,7 +4,6 @@ chat-app/.next/
 
 # Build output
 chat-app/out/
-docs/
 
 # Gradle build artifacts
 sam-app/.gradle/

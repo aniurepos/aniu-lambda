@@ -84,6 +84,11 @@ chat-dev: ## Start Next.js dev server for the chat app
 chat-build: ## Build Next.js static export
 	cd chat-app && npm run build
 
+chat-build-docs: chat-build ## Build Next.js static export and copy to docs/ (for GitHub Pages)
+	rm -rf docs
+	cp -r chat-app/out docs
+	@echo "✅ docs/ folder updated. Commit and push to deploy to GitHub Pages."
+
 chat-tauri-dev: ## Start Tauri dev mode (Next.js + Tauri window)
 	cd chat-app && npm run tauri dev
 

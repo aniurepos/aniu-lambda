@@ -1,4 +1,4 @@
-name: Deploy to GitHub Pages
+name: Build static export to docs/
 
 on:
   push:
@@ -9,19 +9,14 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
 concurrency:
   group: pages
   cancel-in-progress: true
 
 jobs:
-  build-and-deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  build:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -45,11 +40,16 @@ jobs:
         env:
           NEXT_PUBLIC_BASE_PATH: /aniu-lambda
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: chat-app/out
+      - name: Copy to docs/
+        run: |
+          rm -rf ../docs
+          cp -r out ../docs
 
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Commit and push docs/
+        run: |
+          cd ..
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/
+          git diff --quiet && git diff --staged --quiet || git commit -m "chore: update docs/ (static export)"
+          git push
