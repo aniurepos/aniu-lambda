@@ -464,7 +464,30 @@ export default function LandingPage() {
               <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
                 <circle cx="8" cy="8" r="3" fill="#2da44e"/>
               </svg>
-              CI/CD pipeline
+              CI/CD with Integration tests
+            </a>
+            <a
+              href="https://github.com/aniurepos/aniu-lambda/actions/workflows/test-pr.yml"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 6,
+                padding: "5px 14px",
+                borderRadius: 100,
+                background: "#f6f8fa",
+                border: "1px solid #e1e4e8",
+                fontSize: 12,
+                color: "#555",
+                textDecoration: "none",
+              }}
+            >
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                <rect x="2" y="3" width="12" height="10" rx="2" stroke="#555" strokeWidth="1.2" fill="none"/>
+                <path d="M5 8l2 2 4-4" stroke="#2da44e" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+              PR checks
             </a>
             <a
               href="https://github.com/aniurepos/aniu-lambda/releases"
