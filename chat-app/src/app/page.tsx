@@ -201,7 +201,7 @@ function AnimatedCounter({
     <div style={{ textAlign: "center" }}>
       <div
         style={{
-          fontSize: 36,
+          fontSize: "clamp(24px, 6vw, 36px)",
           fontWeight: 800,
           color: "#1677ff",
           letterSpacing: "-0.02em",
@@ -214,7 +214,7 @@ function AnimatedCounter({
       </div>
       <div
         style={{
-          fontSize: 14,
+          fontSize: "clamp(11px, 3vw, 14px)",
           color: "#888",
           marginTop: 4,
           opacity: visible ? 1 : 0,
@@ -480,7 +480,7 @@ export default function LandingPage() {
                 <rect x="2" y="3" width="12" height="10" rx="2" stroke="#555" strokeWidth="1.2" fill="none"/>
                 <path d="M5 8l2 2 4-4" stroke="#2da44e" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
-              PR checks
+              PR checks with Unit tests
             </a>
             <a
               href="https://github.com/aniurepos/aniu-lambda/releases"
