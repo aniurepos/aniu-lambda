@@ -248,6 +248,7 @@ export default function LandingPage() {
       <style>{`
         @media (max-width: 640px) {
           .nav-links { display: none !important; }
+          .stats-grid { grid-template-columns: repeat(2, 1fr) !important; }
         }
       `}</style>
       {/* ── Sticky Nav ── */}
@@ -513,11 +514,12 @@ export default function LandingPage() {
       {/* ── Stats ── */}
       <section ref={statsRef.ref} style={{ padding: "60px 16px", background: "#fff" }}>
         <div
+          className="stats-grid"
           style={{
             maxWidth: 900,
             margin: "0 auto",
             display: "grid",
-            gridTemplateColumns: "repeat(2, 1fr)",
+            gridTemplateColumns: "repeat(4, 1fr)",
             gap: 24,
           }}
         >
