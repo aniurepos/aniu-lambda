@@ -7,44 +7,22 @@ on:
 
 jobs:
   upload:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-
-      - name: Install Rust
-        uses: dtolnay/rust-toolchain@stable
-
-      - name: Install npm dependencies
-        run: npm ci
-        working-directory: chat-app
-
-      - name: Install Tauri CLI
-        run: npm install -g @tauri-apps/cli
-
-      - name: Build DMG
-        run: npx tauri build
-        working-directory: chat-app
-
       - name: Upload DMG to Release
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          # Find the DMG file (Tauri puts it in the dmg/ subdirectory)
-          DMG=$(ls chat-app/src-tauri/target/release/bundle/dmg/*.dmg 2>/dev/null || ls chat-app/src-tauri/target/release/bundle/macos/*.dmg 2>/dev/null)
-          if [ -z "$DMG" ]; then
-            echo "No DMG found in bundle/"
-            find chat-app/src-tauri/target/release/bundle -type f -name "*.dmg" 2>/dev/null || echo "No .dmg files found at all"
+          DMG="chat-app/src-tauri/target/release/bundle/dmg/ChatQuota.dmg"
+          if [ ! -f "$DMG" ]; then
+            echo "No DMG found at $DMG"
+            echo "Build it locally first: cd chat-app && npx tauri build"
+            echo "Then copy the DMG: cp src-tauri/target/release/bundle/dmg/*.dmg src-tauri/target/release/bundle/dmg/ChatQuota.dmg"
             exit 1
           fi
-          # Rename to versionless so download link stays the same across releases
-          DIR=$(dirname "$DMG")
-          cp "$DMG" "$DIR/ChatQuota.dmg"
-          gh release upload "${{ github.ref_name }}" "$DIR/ChatQuota.dmg" --clobber
+          gh release upload "${{ github.ref_name }}" "$DMG" --clobber
