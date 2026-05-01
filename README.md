@@ -201,6 +201,15 @@ The deployed site will have:
 - `https://<user>.github.io/aniu-lambda/` → Landing page
 - `https://<user>.github.io/aniu-lambda/chat` → Chat app
 
+### Install Desktop App (macOS)
+
+Download `ChatQuota.dmg` from [Releases](https://github.com/aniurepos/aniu-lambda/releases).  
+First time opening? Run this in Terminal to bypass Gatekeeper:
+
+```bash
+xattr -d com.apple.quarantine /Applications/ChatQuota.app
+```
+
 ### Build Desktop App (Tauri)
 
 ```bash
@@ -215,7 +224,7 @@ npm run tauri:build
 
 Output:
 - `src-tauri/target/release/bundle/macos/ChatQuota.app`
-- `src-tauri/target/release/bundle/dmg/ChatQuota_0.1.0_aarch64.dmg`
+- `chat-app/dist/ChatQuota.dmg`
 
 ### How it works
 
