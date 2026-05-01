@@ -16,6 +16,8 @@ import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent
 /**
  * Handler for requests to Lambda function.
  * Auth is handled by API Gateway (API Key + Usage Plan).
+ * 
+ * Test PR workflow — verify unit tests run on PR.
  */
 public class App implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
 
