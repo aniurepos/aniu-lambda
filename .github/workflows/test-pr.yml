@@ -1,0 +1,28 @@
+name: Test PR
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "sam-app/**"
+      - ".github/workflows/test-pr.yml"
+
+jobs:
+  unit:
+    name: Java unit tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Java 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: 17
+          distribution: temurin
+
+      - name: Build and test SAM Lambda
+        run: |
+          cd sam-app/HelloWorldFunction
+          chmod +x gradlew
+          ./gradlew build test
