@@ -421,7 +421,7 @@ export default function LandingPage() {
             <Button
               size="large"
               icon={<DownloadOutlined />}
-              href="./ChatQuota_0.1.0_aarch64.dmg"
+              href="https://github.com/aniurepos/aniu-lambda/releases/latest/download/ChatQuota_0.1.0_aarch64.dmg"
               style={{
                 height: 54,
                 paddingInline: 32,
@@ -942,7 +942,7 @@ export default function LandingPage() {
             <Button
               size="large"
               icon={<DownloadOutlined />}
-              href="./ChatQuota_0.1.0_aarch64.dmg"
+              href="https://github.com/aniurepos/aniu-lambda/releases/latest/download/ChatQuota_0.1.0_aarch64.dmg"
               style={{
                 height: 54,
                 paddingInline: 32,
@@ -1027,7 +1027,7 @@ export default function LandingPage() {
               Download
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-              <a href="./ChatQuota_0.1.0_aarch64.dmg" style={{ color: "rgba(255,255,255,0.5)", fontSize: 13, textDecoration: "none" }}>macOS (Apple Silicon)</a>
+              <a href="https://github.com/aniurepos/aniu-lambda/releases/latest/download/ChatQuota_0.1.0_aarch64.dmg" style={{ color: "rgba(255,255,255,0.5)", fontSize: 13, textDecoration: "none" }}>macOS (Apple Silicon)</a>
               <Link href="/chat" style={{ color: "rgba(255,255,255,0.5)", fontSize: 13, textDecoration: "none" }}>Web App</Link>
             </div>
           </div>
