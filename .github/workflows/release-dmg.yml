@@ -23,10 +23,10 @@ jobs:
         uses: dtolnay/rust-toolchain@stable
 
       - name: Install Tauri CLI
-        run: cargo install tauri-cli --version "^2"
+        run: npm install -g @tauri-apps/cli
 
       - name: Build DMG
-        run: cargo tauri build
+        run: npx tauri build
         working-directory: chat-app
 
       - name: Upload DMG to Release
