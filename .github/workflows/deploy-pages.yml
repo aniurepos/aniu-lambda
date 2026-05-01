@@ -40,6 +40,12 @@ jobs:
         env:
           NEXT_PUBLIC_APP_VERSION: ${{ github.ref_name }}
 
+      - name: Fix paths for GitHub Pages subpath
+        run: |
+          # Replace /_next/ with ./_next/ in HTML so it works on both
+          # custom domain (chatquota.com/) and GitHub Pages subpath (aniurepos.github.io/aniu-lambda/)
+          find out -name "*.html" -exec sed -i 's|="/_next/|="./_next/|g' {} +
+
       - name: Copy to docs/
         run: |
           rm -rf ../docs
